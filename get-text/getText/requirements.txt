@@ -1,0 +1,7 @@
+requests
+boto3
+python-json-logger
+botocore
+pylint
+pandas
+numpy==1.20.2

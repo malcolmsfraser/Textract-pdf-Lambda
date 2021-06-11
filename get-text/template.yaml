@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  get-text
+
+  Sample SAM Template for get-text
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 15
+
+Resources:
+  getTextFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: getText/
+      Handler: app.lambda_handler
+      Runtime: python3.7
+      Events:
+        getText:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /getText
+            Method: get
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  getTextApi:
+    Description: "API Gateway endpoint URL for Prod stage for getText function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/getText/"
+  getTextFunction:
+    Description: "getText Lambda Function ARN"
+    Value: !GetAtt getTextFunction.Arn
+  getTextFunctionIamRole:
+    Description: "Implicit IAM Role created for getText function"
+    Value: !GetAtt getTextFunctionRole.Arn
